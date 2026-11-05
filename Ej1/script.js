@@ -5,26 +5,33 @@ const numero = document.getElementById("number");
 const altura = document.getElementById("altura");
 const peso = document.getElementById("peso");
 const cardElement = document.getElementById("card");
+const boton = document.getElementById("boton")
+const tipos=document.getElementById("tipos")
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-fetch(pokeAPI+getRandomNumber(1,1000))
-    .then((response) => response.json())
-    .then((pokemon)=>{
-        nombre.textContent=pokemon.name
-        numero.textContent=pokemon.id
-        altura.textContent=parseFloat(pokemon.height)/10+" m"
-        peso.textContent=parseFloat(pokemon.weight)/10+" kg"
-        imagen.src=pokemon.sprites.front_default
+function getPokemon(){
+    fetch(pokeAPI+getRandomNumber(1,1000))
+        .then((response) => response.json())
+        .then((pokemon)=>{
+            nombre.textContent=pokemon.name
+            numero.textContent=pokemon.id
+            altura.textContent=parseFloat(pokemon.height)/10+" m"
+            peso.textContent=parseFloat(pokemon.weight)/10+" kg"
+            imagen.src=pokemon.sprites.front_default
 
-        let types=pokemon.types
-        types.forEach(element => {
-            let newButton = document.createElement("button");
-            newButton.classList.add(element.type.name);
-            newButton.innerText = element.type.name;
-            cardElement.appendChild(newButton);
-        });
-    })
+            let types=pokemon.types
+            tipos.innerHTML=""
+            types.forEach(element => {
+                let newButton = document.createElement("button");
+                newButton.classList.add(element.type.name);
+                newButton.innerText = element.type.name;
+                tipos.appendChild(newButton);
+            });
+        })
+}
 
+getPokemon()
+boton.addEventListener("click",getPokemon)
