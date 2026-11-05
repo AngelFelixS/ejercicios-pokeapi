@@ -14,24 +14,34 @@ function getRandomNumber(min, max) {
 }
 
 function getPokemon(){
-    fetch(pokeAPI+input.value)
-        .then((response) => response.json())
-        .then((pokemon)=>{
-            nombre.textContent=pokemon.name
-            numero.textContent=pokemon.id
-            altura.textContent=parseFloat(pokemon.height)/10+" m"
-            peso.textContent=parseFloat(pokemon.weight)/10+" kg"
-            imagen.src=pokemon.sprites.front_default
+    const valor=input.value
+    if (valor.trim()!=""){
+        fetch(pokeAPI+valor)
+            .then((response) => response.json())
+            .then((pokemon)=>{
+                nombre.textContent=pokemon.name
+                numero.textContent=pokemon.id
+                altura.textContent=parseFloat(pokemon.height)/10+" m"
+                peso.textContent=parseFloat(pokemon.weight)/10+" kg"
+                imagen.src=pokemon.sprites.front_default
 
-            let types=pokemon.types
-            tipos.innerHTML=""
-            types.forEach(element => {
-                let newButton = document.createElement("button");
-                newButton.classList.add(element.type.name);
-                newButton.innerText = element.type.name;
-                tipos.appendChild(newButton);
-            });
-        })
+                let types=pokemon.types
+                tipos.innerHTML=""
+                types.forEach(element => {
+                    let newButton = document.createElement("button");
+                    newButton.classList.add(element.type.name);
+                    newButton.innerText = element.type.name;
+                    tipos.appendChild(newButton);
+                });
+            })
+    } else {
+        nombre.textContent="Introduce un nombre"
+        numero.textContent=""
+        altura.textContent=""
+        peso.textContent=""
+        imagen.src="./pokeball.png"
+        tipos.innerHTML=""
+    }
 }
 
 boton.addEventListener("click",getPokemon)
