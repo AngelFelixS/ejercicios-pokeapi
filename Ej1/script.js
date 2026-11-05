@@ -15,8 +15,8 @@ fetch(pokeAPI+getRandomNumber(1,1000))
     .then((pokemon)=>{
         nombre.textContent=pokemon.name
         numero.textContent=pokemon.id
-        altura.textContent=pokemon.height+" altura"
-        peso.textContent=pokemon.weight+" peso"
+        altura.textContent=parseFloat(pokemon.height)/10+" m"
+        peso.textContent=parseFloat(pokemon.weight)/10+" kg"
         imagen.src=pokemon.sprites.front_default
 
         let types=pokemon.types
